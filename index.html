@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rochii Deosebite — Rochii de Seară & Ocazie | Chișinău</title>
+  <meta name="description" content="Magazin de rochii de seară și ocazie în Chișinău. Mărimi mari disponibile. Piața Calea Basarabiei, rând 25, magazin 2B.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <div class="loader-text">Deosebite</div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">Rochii Deosebite</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#produse">Produse</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#despre">Despre</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://www.instagram.com/rochii_deosebite/" target="_blank" rel="noopener" class="nav-ig">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        @rochii_deosebite
+      </a>
+      <button class="cart-btn" id="cartBtn" aria-label="Coș">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-bg">
+      <img src="assets/products/hero-banner.jpg" alt="">
+    </div>
+    <div class="hero-content">
+      <span class="hero-label">Chișinău · Moldova</span>
+      <h1>Rochii <em>deosebite</em><br>pentru momente<br>de neuitat</h1>
+      <p class="hero-desc">Descoperă colecția noastră de rochii de seară, costume elegante și bluze rafinate. Mărimi mari disponibile.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">15K+</div>
+          <div class="stat-label">Urmăritori</div>
+        </div>
+        <div>
+          <div class="stat-num">41+</div>
+          <div class="stat-label">Produse</div>
+        </div>
+        <div>
+          <div class="stat-num">44–54</div>
+          <div class="stat-label">Mărimi</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#produse" class="btn btn-primary">Vezi Colecția</a>
+        <a href="https://www.instagram.com/rochii_deosebite/" target="_blank" rel="noopener" class="btn btn-outline">Instagram</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-image-wrap">
+        <img src="assets/products/rochie-roz-aripici.jpg" alt="Rochie roz cu aripici">
+      </div>
+      <div class="hero-float">
+        <p>Modelul preferat</p>
+        <strong>Rochie Roz cu Aripici</strong>
+      </div>
+    </div>
+  </header>
+
+  <section id="produse">
+    <div class="section-header reveal">
+      <div class="section-label">Colecția</div>
+      <h2>Produse Selectate</h2>
+      <p>Analizate din Instagram @rochii_deosebite — fiecare piesă recreată cu Grok Imagine pentru catalog.</p>
+    </div>
+    <div class="category-filters reveal" id="categoryFilters"></div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <section id="video" class="videos-section">
+    <div class="section-header reveal">
+      <div class="section-label">În Mișcare</div>
+      <h2>Video Lookbook</h2>
+      <p>Defileu pe podium — fiecare rochie generată cu Grok Imagine, model elegant pe runway.</p>
+    </div>
+    <div class="videos-grid" id="videosGrid"></div>
+  </section>
+
+  <section id="despre">
+    <div class="about">
+      <div class="about-image reveal">
+        <img src="assets/instagram/DadHejSMyLn.jpg" alt="Magazin Rochii Deosebite">
+      </div>
+      <div class="about-content reveal">
+        <h2>Despre Noi</h2>
+        <p><strong>Rochii de seara</strong> — magazinul tău de încredere pentru rochii de ocazie în Chișinău. Cu peste 15.000 de urmăritori pe Instagram, oferim o selecție vastă de rochii elegante, costume și bluze pentru toate mărimile.</p>
+        <p>De la rochii de seară strălucitoare la costume business elegante — fiecare piesă este aleasă pentru a te face să te simți specială.</p>
+        <div class="about-details">
+          <div class="about-detail">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>Piața Calea Basarabiei</strong><br>
+              <span style="color: var(--text-light); font-size: 0.9rem;">Rând 25, magazin 2B, Chișinău</span>
+            </div>
+          </div>
+          <div class="about-detail">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <strong>069 253 147</strong><br>
+              <span style="color: var(--text-light); font-size: 0.9rem;">Sună sau scrie pe WhatsApp</span>
+            </div>
+          </div>
+          <div class="about-detail">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+            </div>
+            <div>
+              <strong>@rochii_deosebite</strong><br>
+              <span style="color: var(--text-light); font-size: 0.9rem;">15K urmăritori · 316 postări</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="footer-logo">Rochii Deosebite</div>
+    <ul class="footer-links">
+      <li><a href="#produse">Produse</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="https://www.instagram.com/rochii_deosebite/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="tel:+37369253147">069 253 147</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Rochii Deosebite · Piața Calea Basarabiei, Chișinău</p>
+  </footer>
+
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal" style="position: relative;">
+      <button class="modal-close" data-close-modal aria-label="Închide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-image">
+        <img src="" alt="">
+      </div>
+      <div class="modal-body">
+        <h3></h3>
+        <div class="modal-price product-price"></div>
+        <p class="modal-sizes" style="font-size: 0.85rem; color: var(--rose); margin-bottom: 0.5rem;"></p>
+        <p class="modal-desc"></p>
+        <div class="modal-actions">
+          <button class="btn btn-primary" data-modal-cart>Adaugă în Coș</button>
+          <a class="btn btn-outline" data-modal-ig target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal modal-video" style="position: relative;">
+      <button class="modal-close" data-close-modal aria-label="Închide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="video-embed-wrap">
+        <video controls playsinline></video>
+      </div>
+      <div class="modal-body">
+        <h3></h3>
+        <div class="modal-price product-price"></div>
+        <p class="modal-desc"></p>
+        <div class="modal-actions">
+          <button class="btn btn-primary" data-modal-cart>Adaugă în Coș</button>
+          <a class="btn btn-outline" data-modal-ig target="_blank" rel="noopener">Vezi pe IG</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart -->
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Coșul Tău</h3>
+      <button id="cartClose" aria-label="Închide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">0 MDL</span>
+      </div>
+      <button class="btn btn-primary" id="checkoutBtn">Comandă pe WhatsApp</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="data/products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
