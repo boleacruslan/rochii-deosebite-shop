@@ -54,13 +54,18 @@ function updateCartUI() {
   }
 
   container.innerHTML = cart.map((item, i) => `
-    <div class="cart-item">
+    <div class="cart-item" data-index="${i}">
       <img src="${item.image}" alt="${item.name}">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-price">${formatPrice(item.price)}</div>
-        <button class="cart-remove" data-index="${i}">Elimină</button>
+        ${item.sizes ? `<div class="cart-item-sizes">Mărimi ${item.sizes}</div>` : ''}
       </div>
+      <button class="cart-remove" data-index="${i}" aria-label="Elimină ${item.name}" title="Elimină">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
     </div>
   `).join('');
 
@@ -68,9 +73,13 @@ function updateCartUI() {
   totalEl.textContent = formatPrice(total);
 
   container.querySelectorAll('.cart-remove').forEach(btn => {
-    btn.addEventListener('click', () => {
-      cart.splice(+btn.dataset.index, 1);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const index = +btn.dataset.index;
+      const removed = cart[index];
+      cart.splice(index, 1);
       saveCart();
+      if (removed) showToast(`${removed.name} eliminat din coș`);
     });
   });
 }
@@ -281,6 +290,13 @@ function initCart() {
 
   $('#cartClose').addEventListener('click', close);
   $('#cartBackdrop').addEventListener('click', close);
+
+  $('#clearCartBtn').addEventListener('click', () => {
+    if (cart.length === 0) return;
+    cart = [];
+    saveCart();
+    showToast('Coșul a fost golit');
+  });
 
   $('#checkoutBtn').addEventListener('click', () => {
     if (cart.length === 0) return;
