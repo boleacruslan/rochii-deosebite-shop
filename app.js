@@ -17,10 +17,43 @@ function getSiteBase() {
   return window.location.origin + path;
 }
 
+function findProductById(id) {
+  const photo = PRODUCTS.find(p => p.id === id);
+  if (photo) return { type: 'photo', product: photo };
+  const video = VIDEO_PRODUCTS.find(v => v.id === id);
+  if (video) return { type: 'video', product: video };
+  return null;
+}
+
 function getProductLink(item) {
-  const image = item.image || '';
-  const path = image.startsWith('/') ? image.slice(1) : image;
-  return getSiteBase() + path;
+  const id = item.id || '';
+  return `${getSiteBase()}#product/${id}`;
+}
+
+function openProductById(id) {
+  const found = findProductById(id);
+  if (!found) return false;
+
+  if (found.type === 'photo') {
+    const el = document.getElementById('produse');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => openProductModal(found.product), 300);
+  } else {
+    const el = document.getElementById('video');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => openVideoModal(found.product), 300);
+  }
+  return true;
+}
+
+function initDeepLinks() {
+  const openFromHash = () => {
+    const match = window.location.hash.match(/^#product\/(.+)$/);
+    if (match) openProductById(match[1]);
+  };
+
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 }
 
 function buildOrderMessage() {
@@ -194,6 +227,7 @@ function renderVideos() {
 }
 
 function openProductModal(product) {
+  if (product.id) history.replaceState(null, '', `#product/${product.id}`);
   const modal = $('#productModal');
   modal.querySelector('.modal-image img').src = product.image;
   modal.querySelector('.modal-image img').alt = product.name;
@@ -215,6 +249,7 @@ function openProductModal(product) {
 }
 
 function openVideoModal(video) {
+  if (video.id) history.replaceState(null, '', `#product/${video.id}`);
   const modal = $('#videoModal');
   const player = modal.querySelector('video');
   player.src = video.video;
@@ -244,6 +279,9 @@ function closeModals() {
     player.pause();
     player.removeAttribute('src');
     player.load();
+  }
+  if (window.location.hash.startsWith('#product/')) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 }
 
@@ -332,5 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initCart();
   initModals();
+  initDeepLinks();
   initLoader();
 });
