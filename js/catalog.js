@@ -6,10 +6,14 @@ const Catalog = {
     let data = null;
     const cached = localStorage.getItem(this.STORAGE_KEY);
     if (cached) {
-      try { data = JSON.parse(cached); } catch (_) {}
+      try {
+        data = JSON.parse(cached);
+        if (!data?.products || !data?.store) data = null;
+      } catch (_) { data = null; }
     }
     if (!data) {
       const res = await fetch('data/products.json?v=' + Date.now());
+      if (!res.ok) throw new Error('products.json not found: ' + res.status);
       data = await res.json();
     }
     this.data = data;

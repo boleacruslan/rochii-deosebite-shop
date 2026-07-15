@@ -355,25 +355,34 @@ function initModals() {
   });
 }
 
-function initLoader() {
-  window.addEventListener('load', () => {
-    setTimeout(() => $('#loader').classList.add('hidden'), 800);
-  });
+function hideLoader() {
+  const loader = $('#loader');
+  if (loader) loader.classList.add('hidden');
 }
 
 async function initApp() {
-  await Catalog.load();
-  Catalog.applyToGlobals();
-  renderCategoryFilters();
-  renderProducts();
-  renderVideos();
-  updateCartUI();
-  initScrollReveal();
-  initNav();
-  initCart();
-  initModals();
-  initDeepLinks();
-  initLoader();
+  try {
+    await Catalog.load();
+    Catalog.applyToGlobals();
+    renderCategoryFilters();
+    renderProducts();
+    renderVideos();
+    updateCartUI();
+    initScrollReveal();
+    initNav();
+    initCart();
+    initModals();
+    initDeepLinks();
+  } catch (err) {
+    console.error('Eroare la încărcarea catalogului:', err);
+    const main = document.querySelector('main') || document.body;
+    const notice = document.createElement('p');
+    notice.style.cssText = 'text-align:center;padding:2rem;color:#6b2d3e';
+    notice.textContent = 'Eroare la încărcarea produselor. Reîncarcă pagina.';
+    main.prepend(notice);
+  } finally {
+    setTimeout(hideLoader, 400);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
