@@ -7,6 +7,17 @@ function formatPrice(price) {
   return `${price.toLocaleString('ro-MD')} MDL`;
 }
 
+function getSiteBase() {
+  let path = window.location.pathname;
+  if (path.endsWith('index.html')) path = path.slice(0, -'index.html'.length);
+  if (!path.endsWith('/')) path += '/';
+  return window.location.origin + path;
+}
+
+function getProductLink(item) {
+  return new URL(item.image, getSiteBase()).href;
+}
+
 function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartUI();
@@ -259,8 +270,11 @@ function initCart() {
   $('#checkoutBtn').addEventListener('click', () => {
     if (cart.length === 0) return;
     const total = cart.reduce((s, i) => s + i.price, 0);
-    const items = cart.map(i => i.name).join(', ');
-    const msg = `Bună! Doresc să comand: ${items}. Total: ${formatPrice(total)}`;
+    const lines = cart.map((item, i) => {
+      const sizes = item.sizes ? ` (mărimi ${item.sizes})` : '';
+      return `${i + 1}. ${item.name} — ${formatPrice(item.price)}${sizes}\n🔗 ${getProductLink(item)}`;
+    });
+    const msg = `Bună! Doresc să comand:\n\n${lines.join('\n\n')}\n\n💰 Total: ${formatPrice(total)}`;
     window.open(`https://wa.me/37369253147?text=${encodeURIComponent(msg)}`, '_blank');
   });
 }
