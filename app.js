@@ -8,6 +8,9 @@ function formatPrice(price) {
 }
 
 function getSiteBase() {
+  if (typeof STORE !== 'undefined' && STORE.siteUrl) {
+    return STORE.siteUrl.endsWith('/') ? STORE.siteUrl : STORE.siteUrl + '/';
+  }
   let path = window.location.pathname;
   if (path.endsWith('index.html')) path = path.slice(0, -'index.html'.length);
   if (!path.endsWith('/')) path += '/';
@@ -15,7 +18,19 @@ function getSiteBase() {
 }
 
 function getProductLink(item) {
-  return new URL(item.image, getSiteBase()).href;
+  const image = item.image || '';
+  const path = image.startsWith('/') ? image.slice(1) : image;
+  return getSiteBase() + path;
+}
+
+function buildOrderMessage() {
+  const total = cart.reduce((s, i) => s + i.price, 0);
+  const lines = cart.map((item, i) => {
+    const sizes = item.sizes ? `, marimi ${item.sizes}` : '';
+    const link = getProductLink(item);
+    return `${i + 1}. ${item.name} - ${formatPrice(item.price)}${sizes}\n${link}`;
+  });
+  return `Buna! Doresc sa comand de pe ${getSiteBase()}\n\n${lines.join('\n\n')}\n\nTotal: ${formatPrice(total)}`;
 }
 
 function saveCart() {
@@ -269,12 +284,7 @@ function initCart() {
 
   $('#checkoutBtn').addEventListener('click', () => {
     if (cart.length === 0) return;
-    const total = cart.reduce((s, i) => s + i.price, 0);
-    const lines = cart.map((item, i) => {
-      const sizes = item.sizes ? ` (mărimi ${item.sizes})` : '';
-      return `${i + 1}. ${item.name} — ${formatPrice(item.price)}${sizes}\n🔗 ${getProductLink(item)}`;
-    });
-    const msg = `Bună! Doresc să comand:\n\n${lines.join('\n\n')}\n\n💰 Total: ${formatPrice(total)}`;
+    const msg = buildOrderMessage();
     window.open(`https://wa.me/37369253147?text=${encodeURIComponent(msg)}`, '_blank');
   });
 }

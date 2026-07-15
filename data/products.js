@@ -1,6 +1,7 @@
 const STORE = {
   "name": "Rochii Deosebite",
   "tagline": "Rochii de seară & ocazie",
+  "siteUrl": "https://boleacruslan.github.io/rochii-deosebite-shop/",
   "instagram": "https://www.instagram.com/rochii_deosebite/",
   "phone": "069 253 147",
   "address": "Piața Calea Basarabiei, rând 25, magazin 2B",
