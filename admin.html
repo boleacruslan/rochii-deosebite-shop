@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Rochii Deosebite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>Rochii Deosebite</h1>
+      <p>Panou de administrare</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Parolă</label>
+          <input type="password" id="loginPassword" placeholder="Introdu parola" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Intră</button>
+        <p class="login-error" id="loginError">Parolă incorectă</p>
+      </form>
+      <p style="margin-top:1rem;font-size:0.75rem;color:#999;text-align:center">
+        Parolă implicită: <code>rochii2026</code> — schimbă în <code>data/admin-config.js</code>
+      </p>
+    </div>
+  </div>
+
+  <div class="admin-layout" id="adminLayout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>Rochii Deosebite</h2>
+        <span>Admin Panel</span>
+      </div>
+      <button class="nav-item active" data-panel="dashboard">📊 Dashboard</button>
+      <button class="nav-item" data-panel="products">👗 Produse foto</button>
+      <button class="nav-item" data-panel="videos">🎬 Produse video</button>
+      <button class="nav-item" data-panel="categories">📁 Categorii</button>
+      <button class="nav-item" data-panel="store">⚙️ Setări magazin</button>
+      <div class="sidebar-footer">
+        <a href="index.html" class="nav-item" style="text-decoration:none">← Vezi site-ul</a>
+        <button class="nav-item" id="logoutBtn">Deconectare</button>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <!-- Dashboard -->
+      <section class="panel active" id="panel-dashboard">
+        <div class="panel-header"><h1>Dashboard</h1></div>
+        <div class="publish-note">
+          <strong>Cum publici modificările pe site:</strong><br>
+          1. Apasă <strong>Salvează local</strong> — site-ul se actualizează imediat în acest browser.<br>
+          2. Apasă <strong>Exportă JSON</strong> — descarcă <code>products.json</code>.<br>
+          3. Înlocuiește fișierul <code>data/products.json</code> în proiect și fă <code>git push</code> — toți vizitatorii vor vedea modificările.
+        </div>
+        <div class="stats">
+          <div class="stat-card"><div class="num" id="statProducts">0</div><div class="label">Produse foto</div></div>
+          <div class="stat-card"><div class="num" id="statVideos">0</div><div class="label">Produse video</div></div>
+          <div class="stat-card"><div class="num" id="statCategories">0</div><div class="label">Categorii</div></div>
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+          <button class="btn btn-accent" id="saveLocalBtn">💾 Salvează local</button>
+          <button class="btn btn-outline" id="exportBtn">📥 Exportă JSON</button>
+          <button class="btn btn-outline" id="importBtn">📤 Importă JSON</button>
+          <input type="file" id="importFile" accept=".json" hidden>
+          <button class="btn btn-outline" id="resetBtn">🔄 Reset de pe server</button>
+        </div>
+      </section>
+
+      <!-- Products -->
+      <section class="panel" id="panel-products">
+        <div class="panel-header">
+          <h1>Produse foto</h1>
+          <button class="btn btn-accent" id="addProductBtn">+ Adaugă produs</button>
+        </div>
+        <div class="toolbar">
+          <input type="search" id="searchProducts" placeholder="Caută produs...">
+          <select id="filterCategory"></select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Foto</th><th>Nume</th><th>Categorie</th><th>Preț</th><th>Mărimi</th><th>Tip</th><th>Acțiuni</th></tr></thead>
+            <tbody id="productsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Videos -->
+      <section class="panel" id="panel-videos">
+        <div class="panel-header">
+          <h1>Produse video</h1>
+          <button class="btn btn-accent" id="addVideoBtn">+ Adaugă video</button>
+        </div>
+        <div class="toolbar">
+          <input type="search" id="searchVideos" placeholder="Caută video...">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Preview</th><th>Nume</th><th>Categorie</th><th>Preț</th><th>Tip</th><th>Acțiuni</th></tr></thead>
+            <tbody id="videosTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <section class="panel" id="panel-categories">
+        <div class="panel-header"><h1>Categorii</h1></div>
+        <div class="toolbar">
+          <input type="text" id="newCategory" placeholder="Nume categorie nouă" style="flex:1">
+          <button class="btn btn-accent" id="addCategoryBtn">+ Adaugă</button>
+        </div>
+        <div class="cat-list" id="categoriesList"></div>
+      </section>
+
+      <!-- Store settings -->
+      <section class="panel" id="panel-store">
+        <div class="panel-header">
+          <h1>Setări magazin</h1>
+          <button class="btn btn-accent" id="saveStoreBtn">Salvează</button>
+        </div>
+        <div style="max-width:600px">
+          <div class="form-row">
+            <div class="form-group"><label>Nume magazin</label><input id="storeName"></div>
+            <div class="form-group"><label>Slogan</label><input id="storeTagline"></div>
+          </div>
+          <div class="form-group"><label>URL site</label><input id="storeSiteUrl"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Instagram</label><input id="storeInstagram"></div>
+            <div class="form-group"><label>Telefon</label><input id="storePhone"></div>
+          </div>
+          <div class="form-group"><label>Adresă</label><input id="storeAddress"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Oraș</label><input id="storeCity"></div>
+            <div class="form-group"><label>Urmăritori</label><input id="storeFollowers"></div>
+            <div class="form-group"><label>Postări</label><input id="storePosts"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Product modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h2 id="modalTitle">Adaugă produs</h2>
+      <form id="productForm">
+        <div class="form-row">
+          <div class="form-group"><label>ID (slug)</label><input id="formId" placeholder="rochie-roz-aripici"></div>
+          <div class="form-group"><label>Categorie</label><select id="formCategory"></select></div>
+        </div>
+        <div class="form-group"><label>Nume produs</label><input id="formName" required></div>
+        <div class="form-row">
+          <div class="form-group"><label>Preț (MDL)</label><input type="number" id="formPrice" min="0" required></div>
+          <div class="form-group"><label>Mărimi</label><input id="formSizes" placeholder="36–44"></div>
+        </div>
+        <div class="form-group"><label>Descriere</label><textarea id="formDescription"></textarea></div>
+        <div class="form-group">
+          <label>Cale imagine (ex: assets/products/rochie.jpg)</label>
+          <input id="formImage" placeholder="assets/products/nume.jpg" required>
+          <div class="image-upload-row">
+            <div>
+              <input type="file" id="imageFile" accept="image/*">
+              <p style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">Încarcă foto → pune fișierul în assets/products/ pe GitHub</p>
+            </div>
+            <img id="imagePreview" class="image-preview" alt="">
+          </div>
+        </div>
+        <div class="form-group" id="photoBadgeField">
+          <label>Badge (etichetă)</label>
+          <input id="formBadge" placeholder="În stoc, Nou, Popular...">
+        </div>
+        <div id="videoFields" style="display:none">
+          <div class="form-group"><label>Cale video (ex: assets/videos/runway.mp4)</label><input id="formVideo" placeholder="assets/videos/nume.mp4"></div>
+        </div>
+        <div class="form-group"><label>Link Instagram</label><input id="formInstagram" placeholder="https://www.instagram.com/..."></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="cancelModalBtn">Anulează</button>
+          <button type="submit" class="btn btn-accent">Salvează produs</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="data/admin-config.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

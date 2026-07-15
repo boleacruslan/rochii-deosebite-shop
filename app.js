@@ -361,7 +361,9 @@ function initLoader() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function initApp() {
+  await Catalog.load();
+  Catalog.applyToGlobals();
   renderCategoryFilters();
   renderProducts();
   renderVideos();
@@ -372,4 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initDeepLinks();
   initLoader();
-});
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
